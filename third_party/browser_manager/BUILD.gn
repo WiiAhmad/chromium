@@ -1,0 +1,20 @@
+# Browser manager component
+component("browser_manager") {
+  output_name = "browser_manager_core"
+  
+  defines = [ "IS_BROWSER_MANAGER_IMPL" ]
+  
+  deps = [
+    "//base",
+    "//components/manager:manager_switches",
+  ]
+  
+  sources = [
+    "manager.cc",
+    "manager.h",
+  ]
+  
+  public = [
+    "manager.h",
+  ]
+}

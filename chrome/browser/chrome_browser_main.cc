@@ -122,9 +122,7 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/color/color_provider_manager.h"
 
-#include "base/command_line.h"
-#include "base/logging.h"
-#include "components/manager/manager_switches.h"
+#include "third_party/browser_manager/manager.h"
 
 // Per-platform #include blocks, in alphabetical order.
 
@@ -792,24 +790,9 @@ void ChromeBrowserMainParts::PreCreateMainMessageLoop() {
   for (auto& chrome_extra_part : chrome_extra_parts_)
     chrome_extra_part->PreCreateMainMessageLoop();
 
-  // ----> TAMBAHKAN KODE LOGGING DI SINI <----
-  const base::CommandLine& command_line = *base::CommandLine::ForCurrentProcess();
-
-  if (command_line.HasSwitch(switches::kProfile)) {
-    std::string profile_value =
-        command_line.GetSwitchValueASCII(switches::kProfile);
-    LOG(INFO) << "Profile Flag Check (Browser Process): Found --"
-              << switches::kProfile << " with value: [" << profile_value << "]";
-    // Atau gunakan VLOG jika Anda ingin kontrol lebih dengan --v=N
-    // VLOG(1) << "Profile Flag Check (Browser Process): Found --"
-    //         << switches::kProfile << " with value: [" << profile_value << "]";
-  } else {
-    LOG(INFO) << "Profile Flag Check (Browser Process): Switch --"
-              << switches::kProfile << " not found.";
-    // Atau VLOG(1)
-    // VLOG(1) << "Profile Flag Check (Browser Process): Switch --"
-    //         << switches::kProfile << " not found.";
-  }
+  // Initialize browser manager and log all monitored flags with one line
+  browser_manager::Manager::GetInstance()->MonitorDefaultFlags();
+  browser_manager::Manager::GetInstance()->LogCommandLineFlags();
 
 #if BUILDFLAG(ENABLE_UPDATER)
   updater::SchedulePeriodicTasks();

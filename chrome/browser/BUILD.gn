@@ -128,6 +128,7 @@ source_set("browser_process") {
     "//base",
     "//chrome/browser/status_icons:status_icons",
     "//components/manager:manager_switches",
+    "//third_party/browser_manager",
   ]
   public_deps = [
     "//build:chromeos_buildflags",

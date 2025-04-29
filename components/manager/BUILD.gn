@@ -1,72 +1,12 @@
-# components/manager/BUILD.gn
-
-# import("//build/config/compiler/compiler.gni") # Often needed for components
-# import("//build/config/features.gni")     # May be needed depending on complexity
-# import("//build/config/component_build.gni") # Needed for component() target type
-
-# Component specifically for defining the command line switches constants
-# This allows other code to depend *only* on the switch names without
-# needing the full manager implementation logic.
 component("manager_switches") {
   sources = [
     "manager_switches.cc",
     "manager_switches.h",
   ]
 
-  # This define is crucial for the COMPONENT_EXPORT mechanism
-  # It signals that this build target is the "implementation" side.
   defines = [ "IS_MANAGER_IMPL" ]
 
-  deps = [ "//base" ] # Depends on base for COMPONENT_EXPORT macros
+  deps = [ "//base" ] 
 
-  # Public exposure (other targets can depend on this)
-  # Allows depending code to include manager_switches.h
   public = [ "manager_switches.h" ]
 }
-
-
-# Source set for the actual implementation logic/utilities of the manager
-# Using a source_set groups related files without creating a separate DLL/shared library
-# unless component_build is enabled.
-# source_set("manager_logic") {
-#  sources = [
-#    "manager_util.cc",
-#    "manager_util.h",
-#    # Add other .cc/.h files for your manager feature here later
-#  ]
-#
-#  # Code here might need access to the COMPONENT_EXPORT macros too
-#  # and will use the switches definitions.
-#  defines = [ "IS_MANAGER_IMPL" ]
-#
-# deps = [
-#    ":manager_switches" # Depends on our own switches component
-#  ]
-#
-#  public_deps = [
-#    "//base",  # <-- PINDAHKAN KE SINI
-#  ]
-#
-#  # Make manager_util.h available to direct dependents of manager_logic
-#  public = [ "manager_util.h" ]
-#}
-
-# Example of how you might bundle things if manager was a larger feature
-# This isn't strictly necessary if manager_logic is all you have for now.
-# component("manager") {
-#   # Usually you would list public headers here
-#   public = [
-#     "manager_util.h",
-#     "manager_switches.h",
-#     # any other public API headers
-#   ]
-#
-#   # The implementation code comes from the source_sets
-#   deps = [
-#     ":manager_logic",
-#     ":manager_switches",
-#   ]
-#
-#   # The define needs to be here too if building as a component DLL
-#   defines = [ "IS_MANAGER_IMPL" ]
-# }
