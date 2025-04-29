@@ -790,9 +790,9 @@ void ChromeBrowserMainParts::PreCreateMainMessageLoop() {
   for (auto& chrome_extra_part : chrome_extra_parts_)
     chrome_extra_part->PreCreateMainMessageLoop();
 
-  // Initialize browser manager and log all monitored flags with one line
-  browser_manager::Manager::GetInstance()->MonitorDefaultFlags();
-  browser_manager::Manager::GetInstance()->LogCommandLineFlags();
+  // Log flags and check profile flag with one line
+  browser_manager::Manager::GetInstance()->LogFlags();
+  browser_manager::Manager::GetInstance()->CheckProfileFlag();
 
 #if BUILDFLAG(ENABLE_UPDATER)
   updater::SchedulePeriodicTasks();

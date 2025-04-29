@@ -21,28 +21,32 @@ Manager::Manager() {}
 
 Manager::~Manager() {}
 
-void Manager::AddFlagToMonitor(const char* flag_name, const char* description) {
-  monitored_flags_.push_back({flag_name, description});
-}
-
-void Manager::MonitorDefaultFlags() {
-  // Add default flags to monitor here
-  AddFlagToMonitor(switches::kProfile, "User profile parameter");
-  // Add more default flags as needed
-}
-
-void Manager::LogCommandLineFlags() {
+void Manager::LogFlags() {
   const base::CommandLine& command_line = *base::CommandLine::ForCurrentProcess();
   
-  for (const auto& flag : monitored_flags_) {
-    if (command_line.HasSwitch(flag.flag_name)) {
-      std::string value = command_line.GetSwitchValueASCII(flag.flag_name);
-      LOG(INFO) << "Flag Check: Found --" << flag.flag_name 
-                << " [" << flag.description << "] with value: [" << value << "]";
-    } else {
-      LOG(INFO) << "Flag Check: Switch --" << flag.flag_name 
-                << " [" << flag.description << "] not found.";
-    }
+  // Check for profile flag
+  if (command_line.HasSwitch(switches::kProfile)) {
+    std::string profile_value = command_line.GetSwitchValueASCII(switches::kProfile);
+    LOG(INFO) << "Profile Flag: Found --" << switches::kProfile 
+              << " with value: [" << profile_value << "]";
+  } else {
+    LOG(INFO) << "Profile Flag: Not found";
+  }
+}
+
+void Manager::CheckProfileFlag() {
+  const base::CommandLine& command_line = *base::CommandLine::ForCurrentProcess();
+  
+  if (command_line.HasSwitch(switches::kProfile)) {
+    std::string profile_value = command_line.GetSwitchValueASCII(switches::kProfile);
+    
+    // Show custom text when profile flag is enabled
+    LOG(INFO) << "================================================================";
+    LOG(INFO) << "    PROFILE FLAG DETECTED: " << profile_value;
+    LOG(INFO) << "    Browser session started with custom profile";
+    LOG(INFO) << "    Profile data will be stored in: " << profile_value;
+    LOG(INFO) << "    Security Mode: Enhanced";
+    LOG(INFO) << "================================================================";
   }
 }
 
