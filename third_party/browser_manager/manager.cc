@@ -34,20 +34,4 @@ void Manager::LogFlags() {
   }
 }
 
-void Manager::CheckProfileFlag() {
-  const base::CommandLine& command_line = *base::CommandLine::ForCurrentProcess();
-  
-  if (command_line.HasSwitch(switches::kProfile)) {
-    std::string profile_value = command_line.GetSwitchValueASCII(switches::kProfile);
-    
-    // Show custom text when profile flag is enabled
-    LOG(INFO) << "================================================================";
-    LOG(INFO) << "    PROFILE FLAG DETECTED: " << profile_value;
-    LOG(INFO) << "    Browser session started with custom profile";
-    LOG(INFO) << "    Profile data will be stored in: " << profile_value;
-    LOG(INFO) << "    Security Mode: Enhanced";
-    LOG(INFO) << "================================================================";
-  }
-}
-
 }  // namespace browser_manager

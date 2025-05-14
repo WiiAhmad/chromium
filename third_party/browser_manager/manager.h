@@ -6,7 +6,7 @@
 
 namespace browser_manager {
 
-// BrowserManager handles command line flag logging
+// BrowserManager handles command line flag logging 
 class COMPONENT_EXPORT(BROWSER_MANAGER) Manager {
  public:
   // Initializes the manager singleton
@@ -14,9 +14,6 @@ class COMPONENT_EXPORT(BROWSER_MANAGER) Manager {
   
   // Logs command line flags, especially profile flag if present
   void LogFlags();
-  
-  // Checks if profile flag is enabled and shows custom message
-  void CheckProfileFlag();
 
  private:
   Manager();

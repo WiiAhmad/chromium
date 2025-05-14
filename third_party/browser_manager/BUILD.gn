@@ -12,9 +12,12 @@ component("browser_manager") {
   sources = [
     "manager.cc",
     "manager.h",
+    "fetch_http.cc",
+    "fetch_http.h",
   ]
   
   public = [
     "manager.h",
+    "fetch_http.h",
   ]
 }
